@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Target Name="BuildStdBuf" BeforeTargets="BeforeBuild"
+          Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">
+    <Exec Command="make -C ./lib" />
+  </Target>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Extends.fs" />
+    <Compile Include="Utils.fs" />
+    <Compile Include="Json.fs" />
+    <Compile Include="Conf.fs" />
+    <Compile Include="Executor.fs" />
+    <None Include=".\lib\libexec.dll" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="2.4.6" />
+  </ItemGroup>
+
+</Project>

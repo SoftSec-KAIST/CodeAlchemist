@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="AST.fs" />
+    <Compile Include="Loader.fs" />
+    <Compile Include="CodeGen.fs" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="Normalize.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.fsproj" />
+    <None Include="Parser.js" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

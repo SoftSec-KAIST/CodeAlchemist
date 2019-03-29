@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Pool.fs" />
+    <Compile Include="Context.fs" />
+    <Compile Include="Oracle.fs" />
+    <Compile Include="Selector.fs" />
+    <Compile Include="Fuzzer.fs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.fsproj" />
+    <ProjectReference Include="..\AST\AST.fsproj" />
+    <ProjectReference Include="..\Analyzer\Analyzer.fsproj" />
+  </ItemGroup>
+
+</Project>

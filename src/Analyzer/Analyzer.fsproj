@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="JSType.fs" />
+    <Compile Include="Constraint.fs" />
+    <Compile Include="CodeBrick.fs" />
+    <Compile Include="Instrument.fs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.fsproj" />
+    <ProjectReference Include="..\AST\AST.fsproj" />
+    <None Include="jsLib/V8.js" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="jsLib/Chakra.js" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="jsLib/JSC.js" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="jsLib/MOZ.js" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
