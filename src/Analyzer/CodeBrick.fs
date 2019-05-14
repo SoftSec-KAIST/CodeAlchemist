@@ -35,10 +35,16 @@ type Context = {
 }
 
 module Context =
+  let mkIsBuiltIn conf =
+    let lists = conf.BuiltIns
+    match conf.Engine with
+    | V8 -> (fun x -> (Array.includes lists x) || (x.StartsWith ("%")))
+    | _ -> Array.includes lists
+
   let init conf = {
     Pool = Map.empty
     GuardMap = Map.empty
-    IsBuiltIn = Array.includes conf.BuiltIns
+    IsBuiltIn = mkIsBuiltIn conf
     IsFilters =
       (fun x -> Map.foranyKeys (Array.includes conf.Filters) x.NSymMap)
   }
