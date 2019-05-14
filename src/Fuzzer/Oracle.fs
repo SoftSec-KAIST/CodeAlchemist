@@ -28,9 +28,16 @@ module Signal =
     | _ -> true
 
 module Oracle =
+  let v8Table = [|
+    "Fatal javascript OOM";
+    "Check failed: args";
+  |]
+
+  let checkTable table err = Array.exists (String.contains err) table |> not
+
   let isCrash = Signal.ofRet >> Signal.isCrash
 
-  let isV8Bug (struct (ret, out, err)) = isCrash ret
+  let isV8Bug (struct (ret, out, err)) = isCrash ret && checkTable v8Table err
 
   let isChakraBug (struct (ret, out, err)) = isCrash ret
 
