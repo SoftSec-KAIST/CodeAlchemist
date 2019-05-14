@@ -11,7 +11,7 @@ open Analyzer.Instrument
 let parseSeed conf =
   let jsonDir = conf.PreprocDir +/ "json"
   if existDir jsonDir then ()
-  else mkDir jsonDir |> parseAll conf.SeedDir
+  else mkDir jsonDir |> parseAll (Conf.engineToStr conf.Engine) conf.SeedDir
   loads jsonDir
 
 let rewrite rewriteDir loader ctx (name, ast) = async {
