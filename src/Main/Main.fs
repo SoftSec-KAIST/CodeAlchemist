@@ -62,6 +62,23 @@ let loadConf fname argv =
         usagePrint spec prog usage (fun () -> exit 1)
   Conf.load fname opts.ProbBlk opts.IterBlk opts.IterMax opts.DepthMax
 
+let reproduce conf =
+  let exec = Executor.getAsyncExec conf "/"
+  let oracle = Fuzzer.Oracle.getOracle conf.Engine
+  let checkOne js =
+    let ret = exec js |> Async.RunSynchronously
+    if oracle ret then
+      let struct (ret, out, err) = ret
+      Logger.info "Reproducess success: %s\nSIGNAL: %d\nSTDOUT:\n%s\nSTDERR:\n%s"
+        js ret out err
+    else
+      Logger.info "Reproduce fail: %s" js
+      Utils.renameFile js (js + ".not")
+
+  Utils.getFiles [||] conf.BugDir
+  |> Array.filter (fun str -> str.EndsWith (".js"))
+  |> Array.iter checkOne
+
 [<EntryPoint>]
 let main argv =
   if argv.[0] = "rewrite" then loadConf argv.[1] [||] |> rewriteAll
@@ -69,5 +86,6 @@ let main argv =
   elif argv.[0] = "fuzz" then
     let conf = loadConf argv.[1] argv.[2..]
     loadBricks conf |> Fuzzer.fuzz conf
+  elif argv.[0] = "reproduce" then loadConf argv.[1] [||] |> reproduce
   else ()
   0
