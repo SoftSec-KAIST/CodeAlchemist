@@ -9,6 +9,5 @@ example configuration files for 4 JS engines.
 - `preproc_dir`: ABSPATH for saving preprocessing results.
 - `tmp_dir`: ABSPATH for temporarily saving generated JS code.
 - `bug_dir`: ABSPATH for saving JS code which triggered some crash.
-- `built-ins`: List of built-ins symbols.
 - `filters`: List of symbols to exclude from the code brick pool.
 - `jobs`: The number of jobs (cores) to use for fuzzing.
