@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Logger.fs" />
     <Compile Include="Extends.fs" />
     <Compile Include="Utils.fs" />
     <Compile Include="Json.fs" />
