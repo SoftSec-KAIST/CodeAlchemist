@@ -86,7 +86,9 @@ let parseJson ret json =
     let res = Json.getPropInt64 json "hval", parseTypes json "pre",
               parseTypes json "post"
     Set.add res ret
-  with e -> eprintfn "%A" e; ret
+  with
+    | LoadJSTypeException (ty) -> Logger.warn "Unknown Type: %s" ty; ret
+    | e -> Logger.error "parseJson fail: %A" e
 
 let loadType fname = async {
   let! json = Json.asyncLoadJson fname
@@ -107,7 +109,7 @@ let loadConst pool gMap ret (hval, pre, post) =
     let guard = Map.find gHash pool
     (loader guard) :: (loader brick) :: ret
   | Some brick, None -> (loader brick) :: ret
-  | None, _ -> failwithf "%d not found" hval
+  | None, _ -> Logger.error "%d not found" hval
 
 let loadConsts dir (pool, gMap)=
   loadTypes dir

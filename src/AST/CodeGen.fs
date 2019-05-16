@@ -1,6 +1,7 @@
 module AST.CodeGen
 
 open System
+open Common
 
 exception ToCodeException of string
 
@@ -109,7 +110,7 @@ let propKindToCode sb = function
 let nameToCode sb = function
   | Expr.Id id -> addStr sb id
   | Expr.Literal literal -> literalToStr literal |> addStr sb
-  | e -> failwithf "nameToCode fail: %A" e
+  | e -> Logger.error "nameToCode fail: %A" e
 
 let idToCode map sb id =
   match Map.tryFind id map with
@@ -611,5 +612,5 @@ let progToCode map prog =
   let sb = new SB ()
   match prog with
   | Script stmts -> stmtListToCode map sb stmts
-  | _ -> failwith "todo"
+  | _ -> Logger.error "Module is not supported"
   sb.ToString ()

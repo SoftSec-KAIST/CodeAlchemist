@@ -1,5 +1,6 @@
 module AST.Loader
 
+open Common
 open Common.Json
 open Common.Utils
 
@@ -532,11 +533,11 @@ and loadMemberExpr json =
 let loadProg json =
   match getPropStr json "sourceType" with
   | "script" -> loadStmtListProp json "body" |> Script
-  | "module" -> failwith "todo"
+  | "module" -> Logger.error "Module is not supported"
   | _ -> raise (LoadASTException "Prog")
 
 let failToLoad fname =
-  eprintfn "fail to load seed: %s" fname
+  Logger.warn "fail to load seed: %s" fname
   fname, Script [||]
 
 let load fname =

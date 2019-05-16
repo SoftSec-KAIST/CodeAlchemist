@@ -491,7 +491,7 @@ and rewriteMemberPt expr ctx =
 let rewriteProg ctx = function
   | Script stmts -> let stmts, ctx, _ = rewriteStmtList stmts ctx
                     Script stmts, (ctx.Pool, ctx.GuardMap)
-  | Module _ -> failwith "todo"
+  | Module _ -> Logger.error "Module is not supported"
 
 let getJsLibPath engine =
   let dir = Reflection.Assembly.GetExecutingAssembly().Location |> getDirName

@@ -107,7 +107,7 @@ module CodeBrick =
     | Stmt.ForOf (bind, expr, Stmt.Empty) -> ForOf (bind, expr)
     | Stmt.While (cond, Stmt.Empty) -> While cond
     | Stmt.DoWhile (Stmt.Empty, cond) -> DoWhile cond
-    | stmt -> failwithf "stmtToGuard fail: %A" stmt
+    | stmt -> Logger.error "stmtToGuard fail: %A" stmt
 
   let normalizeGuard filter guard sb =
     addStr sb "// Guard\n"

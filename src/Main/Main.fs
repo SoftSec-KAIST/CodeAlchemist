@@ -56,10 +56,9 @@ let loadConf fname argv =
     try optParse spec usage "CodeAlchemist" argv defaultOpts
     with
       | SpecErr msg ->
-        eprintfn "Invalid spec: %s" msg
-        exit 1
+        Logger.error "Invalid spec: %s" msg
       | RuntimeErr msg ->
-        eprintfn "Invalid args given by user: %s" msg
+        Logger.errorNoExit "Invalid args given by user: %s" msg
         usagePrint spec prog usage (fun () -> exit 1)
   Conf.load fname opts.ProbBlk opts.IterBlk opts.IterMax opts.DepthMax
 

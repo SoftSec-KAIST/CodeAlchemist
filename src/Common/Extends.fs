@@ -3,7 +3,7 @@ namespace Common
 module List =
   let partitionFst = function
     | first :: remain -> first, remain
-    | _ -> failwith "List.partitionFst fail"
+    | _ -> Logger.error "List.partitionFst fail"
 
 module Array =
   let revList arr = Array.ofList arr |> Array.rev
