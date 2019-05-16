@@ -78,6 +78,15 @@ module Pool =
 
   let filterEmptySyntax x = (fst x |> snd) = Constraint.emptySyntax
 
+  let private checkPool pool =
+    let checker (((map, cnt), _), _) = (map = Map.empty) && (cnt = 0)
+    Array.exists checker pool
+
+  let private checkPools (ssPool, sPool) gPool =
+    if (checkPool ssPool) && (checkPool gPool) then
+      (ssPool, sPool), gPool
+    else Logger.error "Need more diverse seeds"
+
   let initPools bricks =
     let folder (sPool, gPool) brick =
       let cons = brick.Constraint
@@ -88,4 +97,4 @@ module Pool =
         addPool sPool cons.Pre brick.Hash stmt cons.Syntax cons.Post, gPool
     let sPool, gPool = List.fold folder (Map.empty, Map.empty) bricks
     let sPool = conv sPool
-    (Array.filter filterEmptySyntax sPool, sPool), conv gPool
+    checkPools (Array.filter filterEmptySyntax sPool, sPool) (conv gPool)
