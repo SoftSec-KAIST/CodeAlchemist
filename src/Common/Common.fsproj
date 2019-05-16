@@ -22,6 +22,7 @@
   
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="2.4.6" />
+    <None Include="BuiltInGetter.js" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
