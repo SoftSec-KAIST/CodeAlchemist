@@ -191,7 +191,7 @@ module Constraint =
 
   let finiTry cons = finiBlock cons |> unsetTry
 
-  let finiVarDecl kind out cons =
+  let finiVarDeclr kind out cons =
     let lv = match kind with
              | Let -> Block
              | _ -> Func

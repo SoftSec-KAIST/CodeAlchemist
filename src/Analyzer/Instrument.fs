@@ -217,13 +217,13 @@ and rewriteForInit init ctx =
   | None -> None, ctx, Constraint.empty
 
 and rewriteVarDecl (kind, declr) ctx =
-  let declr, ctx, cons, out = fold2 ctx rewriteVarDeclr declr
-  (kind, declr), ctx, Constraint.finiVarDecl kind out cons
+  let declr, ctx, cons = foldG ctx (rewriteVarDeclr kind) declr
+  (kind, declr), ctx, cons
 
-and rewriteVarDeclr (bind, init) ctx =
+and rewriteVarDeclr kind (bind, init) ctx =
   let bind, ctx, cons1, out = rewriteBinding bind ctx
   let init, ctx, cons2 = rewriteExprOpt init ctx
-  (bind, init), ctx, cons1 +> cons2, out
+  (bind, init), ctx, cons1 +> cons2 |> Constraint.finiVarDeclr kind out
 
 and rewriteForIn bind expr body ctx sHash =
   let guard = Guard.ForIn (bind, expr)
