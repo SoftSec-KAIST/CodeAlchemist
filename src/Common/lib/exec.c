@@ -37,6 +37,10 @@ void exec (int argc, char **arg, char *dir, int timeout, int *ret) {
     failwith ("pipe fail");
 
   pid = vfork ();
+  while (pid < 0) {
+    sleep (1);
+    pid = vfork ();
+  }
   
   if (pid < 0) failwith ("vfork fail");
   else if (pid == 0) {
