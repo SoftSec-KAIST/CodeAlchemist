@@ -210,12 +210,16 @@ module Constraint =
 
   let loadTypePost post id ty =
     match Map.tryFind id post with
-    | Some (_, scope) -> Map.add id (ty, scope) post
+    | Some (_, scope) ->
+      if JSType.isUndef ty then Map.remove id post
+      else Map.add id (ty, scope) post
     | None -> post
 
   let loadTypePre pre id ty =
     match Map.tryFind id pre with
-    | Some _ -> Map.add id ty pre
+    | Some _ ->
+      if JSType.isUndef ty then Map.remove id pre
+      else Map.add id ty pre
     | _ -> pre
 
   let loadTypes cons pre post =
