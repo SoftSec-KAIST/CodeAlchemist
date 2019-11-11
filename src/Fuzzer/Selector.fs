@@ -47,10 +47,12 @@ let pickCond rnd ctx (cmap, _) ((stmt, pre, scope), posts) =
   let dMap, post = getDelMap rMap pre post
   let rMap, post = updatePost idx rMap post
   let folder ret id lv =
-    let nId = Map.find id rMap
-    match Map.tryFind nId post with
-    | Some ty -> Map.add nId (lv, ty) ret
-    | None -> Map.add nId (lv, Map.find id pre) ret
+    match Map.tryFind id rMap with
+    | Some nId ->
+      match Map.tryFind nId post with
+      | Some ty -> Map.add nId (lv, ty) ret
+      | None -> Map.add nId (lv, Map.find id pre) ret
+    | None -> ret
   let scope = Map.fold folder Map.empty scope
   struct (stmt, rMap, scope, dMap, post)
 
